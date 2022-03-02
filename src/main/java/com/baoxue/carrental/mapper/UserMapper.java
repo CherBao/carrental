@@ -8,18 +8,18 @@ import java.util.List;
 
 @Repository
 public interface UserMapper {
-    @Select(value = "select * from user")
-     List<User> queryAll();
+    @Select(value = "select * from users order by id limit #{offset}, #{limit}")
+    List<User> queryAll(int offset, int limit);
 
-    @Select(value = "select * from user where id = #{id}")
-     User queryById(int id);
+    @Select(value = "select * from users where id = #{id}")
+    User queryById(int id);
 
-    @Insert("insert into user(id, name, phone) VALUES (#{id}, #{name}, #{phone})")
+    @Insert("insert into users(id, name, phone) values (#{id}, #{name}, #{phone})")
     int insert(User user);
 
-    @Delete("DELETE FROM user WHERE id=#{id}")
+    @Delete("delete from users where id=#{id}")
     int delete(int id);
 
-    @Update("UPDATE user SET name=#{name}, phone=#{phone} WHERE id=#{id}")
-    int update(User user);
+    @Update("update users set name=#{user.name}, phone=#{user.phone} where id=#{userid}")
+    int update(User user, int userid);
 }

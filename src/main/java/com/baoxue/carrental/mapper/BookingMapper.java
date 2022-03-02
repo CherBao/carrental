@@ -12,20 +12,26 @@ import java.util.List;
 
 @Repository
 public interface BookingMapper {
-    @Select(value = "select * from booking")
-    List<Booking> queryAll();
+    @Select(value = "select * from booking order by order_no limit #{offset}, #{limit} ")
+    List<Booking> queryAll(int offset, int limit);
 
-    @Select(value = "select * from booking where userid = #{userid} and vehicleid=#{vehicleid}")
-    Booking queryByKey(int userid, int vehicleid);
+    @Select(value = "select * from booking where order_no = #{order_no} order by order_no")
+    Booking queryByKey(String order_no);
 
-    @Insert("insert into booking(userid, vehicleid, status, rent, begdate, tenancy) " +
-            "VALUES (#{userid}, #{vehicleid}, #{status}, #{rent}, #{begdate}, #{tenancy}")
+    @Select(value = "select * from booking where user_id = #{user_id} order by order_no")
+    List<Booking> queryByUserId(int user_id);
+
+    @Insert("insert into booking(order_no, user_id, vehicle_id, status, rent, take_date, tenancy) " +
+            "values (#{order_no}, #{user_id}, #{vehicle_id}, #{status}, #{rent}, #{take_date}, #{tenancy})")
     int insert(Booking booking);
 
-    @Delete("DELETE FROM booking from booking where userid = #{userid} and vehicleid=#{vehicleid}")
-    int delete(int userid, int vehicleid);
+    @Delete("delete from booking where order_no = #{order_no}")
+    int deleteByKey(String order_no);
 
-    @Update("UPDATE booking SET status=#{status},rent= #{rent}, begdate=#{begdate}, tenancy=#{tenancy} " +
-            "where userid = #{userid} and vehicleid=#{vehicleid}")
-    int update(Booking booking);
+    @Update("update booking set vehicle_id=#{booking.vehicle_id}, status=#{booking.status}, rent= #{booking.rent}, take_date=#{booking.take_date}, tenancy=#{booking.tenancy} " +
+            "where order_no = #{orderNo}")
+    int update(Booking booking, String orderNo);
+
+    @Update("update booking set status = #{status} where order_no = #{orderNo}")
+    int updateStatus(String orderNo, char status);
 }

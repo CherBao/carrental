@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/vehicle")
 @Api(tags = "车辆管理相关接口")
@@ -17,8 +20,8 @@ public class VehicleController {
 
     @GetMapping(value = "/query")
     @ApiOperation("查询所有车辆信息接口")
-    public ResponseDto queryAll() {
-        return vehicleService.queryAll();
+    public ResponseDto queryAll(@PathParam("offset") int offset, @PathParam("limit") int limit) {
+        return vehicleService.queryAll(offset, limit);
     }
 
     @GetMapping(value = "/query/{id}")
@@ -29,23 +32,23 @@ public class VehicleController {
 
     @GetMapping(value = "/query/status/{status}")
     @ApiOperation("根据车辆状态查询车辆信息接口")
-    public ResponseDto queryByStatus(@PathVariable String status) {
+    public ResponseDto queryByStatus(@PathVariable char status) {
         return vehicleService.queryByStatus(status);
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping()
     @ApiOperation("添加车辆接口")
-    public ResponseDto add(@RequestBody Vehicle vehicle) {
+    public ResponseDto add(@Valid @RequestBody Vehicle vehicle) {
         return vehicleService.insert(vehicle);
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping(value = "/{id}")
     @ApiOperation("更新车辆信息接口")
-    public ResponseDto update(@RequestBody Vehicle vehicle) {
-        return vehicleService.update(vehicle);
+    public ResponseDto update(@Valid @RequestBody Vehicle vehicle, @PathVariable int id) {
+        return vehicleService.update(vehicle, id);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     @ApiOperation("删除车辆接口")
     public ResponseDto delete(@PathVariable int id) {
         return vehicleService.delete(id);
