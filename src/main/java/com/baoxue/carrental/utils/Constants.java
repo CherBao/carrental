@@ -2,12 +2,13 @@ package com.baoxue.carrental.utils;
 
 public class Constants {
 
-    public static char VEHICLE_IDLE = '0';//车辆空闲状态，可被租用
-    public static char VEHICLE_RENTED = '1';//租用中
-    public static char VEHICLE_BAD = '9';//车辆异常状态
+    public static char CAR_IN_STOCK = '0';//The car is at company
+    public static char CAR_BOOKED = '1';//booked
+    public static char CAR_USING = '1';//picked up, using
+    public static char CAR_BAD = '9';//Vehicle abnormal state
 
-    public static char BOOK_WAITTING = '0';//已预定，待取车
-    public static char BOOK_PROCESSING = '1';//已取车，租用中
-    public static char BOOK_FINISHED = '9';//已还车，租用结束
+    public static char BOOK_WAITING = '0';//Waiting for pick-up
+    public static char BOOK_PROCESSING = '1';//The car has been picked up and is being rented
+    public static char BOOK_FINISHED = '9';//The car has been returned and the lease is over
 
 }

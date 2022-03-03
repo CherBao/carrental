@@ -53,6 +53,7 @@ class UserControllerTest {
         params.put("id", 20);
         params.put("name", "孟浩然");
         params.put("phone", "16666666666");
+        params.put("password", "77777777");
         System.out.println(params);
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -68,6 +69,7 @@ class UserControllerTest {
         params.put("id", 1);
         params.put("name", "孟浩然");
         params.put("phone", "16666666666");
+        params.put("password", "99999999");
         System.out.println(params);
         mockMvc.perform(MockMvcRequestBuilders.put("/users/1")
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)

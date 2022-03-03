@@ -4,38 +4,38 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @ApiModel
 public class Booking {
 
-    @ApiModelProperty(value = "预定单号")
+    @ApiModelProperty(value = "booking order no")
     private String order_no;
 
-    @ApiModelProperty(value = "用户id")
+    @ApiModelProperty(value = "user id")
     private int user_id;
 
-    @ApiModelProperty(value = "车辆id")
-    private int vehicle_id;
+    @ApiModelProperty(value = "car id")
+    private String car_id;
 
-    @ApiModelProperty(value = "预定状态")
+    @ApiModelProperty(value = "booking status")
     private char status = '0';
 
-    @ApiModelProperty(value = "总租金")
+    @ApiModelProperty(value = "total rent")
     private BigDecimal rent = BigDecimal.ZERO;
 
-    @ApiModelProperty(value = "预定取车日期")
-    @NotNull(message = "预定取车时间不能为空")
-    private Timestamp take_date;
+    @ApiModelProperty(value = "pick up the car date")
+    @NotNull(message = "pickup_date cannot be null")
+    private Timestamp pickup_date;
 
-    @ApiModelProperty(value = "租期")
-    private int tenancy;
+    @ApiModelProperty(value = "return the car date")
+    @NotNull(message = "return_date cannot be null")
+    private Timestamp return_date;
 
-    @ApiModelProperty(value = "创建日期")
+    @ApiModelProperty(value = "create time")
     private Timestamp create_time;
 }

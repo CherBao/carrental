@@ -3,7 +3,7 @@ package com.baoxue.carrental.service;
 import com.baoxue.carrental.domain.Booking;
 import com.baoxue.carrental.dto.ResponseDto;
 import com.baoxue.carrental.mapper.BookingMapper;
-import com.baoxue.carrental.mapper.VehicleMapper;
+import com.baoxue.carrental.mapper.CarMapper;
 import com.baoxue.carrental.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ public class BookingService {
     @Autowired
     private BookingMapper bookingMapper;
     @Autowired
-    private VehicleMapper vehicleMapper;
+    private CarMapper carMapper;
 
     public ResponseDto queryAll(int offset, int limit) {
         try {
-            if (offset < 0 || limit <= 0) throw new Exception("分页参数非法!");
+            if (offset < 0 || limit <= 0) throw new Exception("Illegal paging parameter!");
             List<Booking> data = bookingMapper.queryAll(offset, limit);
             return ResponseDto.builder().isSuccess(true).data(data).message("ok").build();
         } catch (Exception e) {
@@ -52,25 +52,30 @@ public class BookingService {
         }
     }
 
+    @Transactional
     public ResponseDto order(Booking booking) {
         try {
+            int v = carMapper.updateStatus(booking.getCar_id(), Constants.CAR_BOOKED);
+            if (v == 0) throw new Exception("Failed to update car status!");
             booking.setOrder_no(String.valueOf(System.currentTimeMillis()));
-            booking.setStatus(Constants.BOOK_WAITTING);
-            int data = bookingMapper.insert(booking);
-            return ResponseDto.builder().isSuccess(true).data(data).message("ok").build();
+            booking.setStatus(Constants.BOOK_WAITING);
+            int b = bookingMapper.insert(booking);
+            if (b == 0) throw new Exception("Failed to add booking record!");
+            return ResponseDto.builder().isSuccess(true).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResponseDto.builder().isSuccess(false).message(e.getMessage()).build();
         }
     }
 
     @Transactional
-    public ResponseDto take(Booking booking) {
+    public ResponseDto pickup(Booking booking) {
         try {
-            int v = vehicleMapper.updateStatus(booking.getVehicle_id(), Constants.VEHICLE_RENTED);
-            if (v == 0) throw new Exception("更新车辆状态失败");
+            int v = carMapper.updateStatus(booking.getCar_id(), Constants.CAR_USING);
+            if (v == 0) throw new Exception("Failed to update car status!");
             int b = bookingMapper.updateStatus(booking.getOrder_no(), Constants.BOOK_PROCESSING);
-            if (b == 0) throw new Exception("更新订单状态失败");
+            if (b == 0) throw new Exception("Failed to update booking status!");
             return ResponseDto.builder().isSuccess(true).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
@@ -82,10 +87,10 @@ public class BookingService {
     @Transactional
     public ResponseDto returnBack(Booking booking) {
         try {
-            int v = vehicleMapper.updateStatus(booking.getVehicle_id(), Constants.VEHICLE_IDLE);
-            if (v == 0) throw new Exception("更新车辆状态失败");
+            int v = carMapper.updateStatus(booking.getCar_id(), Constants.CAR_IN_STOCK);
+            if (v == 0) throw new Exception("Failed to update car status!");
             int b = bookingMapper.updateStatus(booking.getOrder_no(), Constants.BOOK_FINISHED);
-            if (b == 0) throw new Exception("更新订单状态失败");
+            if (b == 0) throw new Exception("Failed to update booking status!");
             return ResponseDto.builder().isSuccess(true).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
@@ -104,12 +109,19 @@ public class BookingService {
         }
     }
 
+    @Transactional
     public ResponseDto deleteByKey(String order_no) {
         try {
-            int data = bookingMapper.deleteByKey(order_no);
-            return ResponseDto.builder().isSuccess(true).data(data).message("ok").build();
+            Booking booking = bookingMapper.queryByKey(order_no);
+            if(booking==null) throw new Exception("Can not find the booking record!");
+            int v = carMapper.updateStatus(booking.getCar_id(),Constants.CAR_IN_STOCK);
+            if (v == 0) throw new Exception("Failed to update car status!");
+            int b = bookingMapper.deleteByKey(order_no);
+            if (b == 0) throw new Exception("Failed to update booking status!");
+            return ResponseDto.builder().isSuccess(true).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return ResponseDto.builder().isSuccess(false).message(e.getMessage()).build();
         }
     }

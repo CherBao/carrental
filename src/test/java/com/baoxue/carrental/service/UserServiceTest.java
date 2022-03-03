@@ -30,8 +30,9 @@ class UserServiceTest {
     void insert() {
         User user = new User();
         user.setId(99);
-        user.setName("李清照");
+        user.setName("Lily");
         user.setPhone("15555555555");
+        user.setPassword("55555555");
         ResponseDto res = userService.insert(user);
         assertTrue(res.isSuccess());
         assertNotNull(res.getData());
@@ -41,8 +42,9 @@ class UserServiceTest {
     void update() {
         User user = new User();
         user.setId(99);
-        user.setName("李清照");
+        user.setName("Lily");
         user.setPhone("15555555554");
+        user.setPassword("55555555");
         ResponseDto res = userService.update(user,99);
         assertTrue(res.isSuccess());
         assertEquals(res.getData(),1);

@@ -14,12 +14,12 @@ public interface UserMapper {
     @Select(value = "select * from users where id = #{id}")
     User queryById(int id);
 
-    @Insert("insert into users(id, name, phone) values (#{id}, #{name}, #{phone})")
+    @Insert("insert into users(id, name, phone,password) values (#{id}, #{name}, #{phone}, #{password})")
     int insert(User user);
 
     @Delete("delete from users where id=#{id}")
     int delete(int id);
 
-    @Update("update users set name=#{user.name}, phone=#{user.phone} where id=#{userid}")
+    @Update("update users set name=#{user.name}, phone=#{user.phone} , password=#{user.password} where id=#{userid}")
     int update(User user, int userid);
 }

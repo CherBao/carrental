@@ -10,16 +10,22 @@ import javax.validation.constraints.Size;
 @Data
 @ApiModel
 public class User {
-    @ApiModelProperty(value = "用户id")
+    @ApiModelProperty(value = "user id")
     private int id;
 
-    @ApiModelProperty(value = "用户姓名")
-    @NotBlank(message = "用户姓名不能为空")
-    @Size(max = 20, message = "用户姓名超长")
+    @ApiModelProperty(value = "user name")
+    @NotBlank(message = "user name cannot be blank")
+    @Size(max = 20, message = "User name is too long")
     private String name;
 
-    @ApiModelProperty(value = "用户电话")
-    @NotBlank(message = "用户电话不能为空")
-    @Size(min = 11, max = 11, message = "用户电话长度非法")
+    @ApiModelProperty(value = "user phone")
+    @NotBlank(message = "user phone cannot be blank")
+    @Size(min = 11, max = 11, message = "Illegal length of user phone")
     private String phone;
+
+    @ApiModelProperty(value = "user password")
+    @NotBlank(message = "user password cannot be blank")
+    @Size(min = 8, max = 8, message = "Illegal length of user password")
+    private String password;
+
 }

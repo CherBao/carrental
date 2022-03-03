@@ -13,55 +13,55 @@ import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping(value = "/book")
-@Api(tags = "预定管理相关接口")
+@Api(tags = "Booking management related interfaces")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
 
     @GetMapping(value = "/query")
-    @ApiOperation("查询所有预定记录接口")
+    @ApiOperation("Paging query all booking record interface")
     public ResponseDto queryAll(@PathParam("offset") int offset, @PathParam("limit") int limit) {
         return bookingService.queryAll(offset, limit);
     }
 
     @GetMapping(value = "/query/{order_no}")
-    @ApiOperation("根据订单号查询预定记录接口")
+    @ApiOperation("Query booking records according to order number interface")
     public ResponseDto queryByKey(@PathVariable String order_no) {
         return bookingService.queryByKey(order_no);
     }
 
     @GetMapping(value = "/query/user_id/{user_id}")
-    @ApiOperation("根据订单号查询预定记录接口")
+    @ApiOperation("Query booking records according to user id interface")
     public ResponseDto queryByUserId(@PathVariable int user_id) {
         return bookingService.queryByUserId(user_id);
     }
 
     @PostMapping(value = "/order")
-    @ApiOperation("预定下单接口")
+    @ApiOperation("Booking interface")
     public ResponseDto order(@RequestBody Booking booking) {
         return bookingService.order(booking);
     }
 
-    @PostMapping(value = "/take")
-    @ApiOperation("取车接口")
-    public ResponseDto take(@RequestBody Booking booking) {
-        return bookingService.take(booking);
+    @PostMapping(value = "/pickup")
+    @ApiOperation("Pick up the car interface")
+    public ResponseDto pickup(@RequestBody Booking booking) {
+        return bookingService.pickup(booking);
     }
 
     @PostMapping(value = "/return")
-    @ApiOperation("还车接口")
+    @ApiOperation("Return the car interface")
     public ResponseDto returnBack(@RequestBody Booking booking) {
         return bookingService.returnBack(booking);
     }
 
     @PutMapping(value = "/{order_no}")
-    @ApiOperation("更新预定记录接口")
+    @ApiOperation("Update booking record interface")
     public ResponseDto update(@Valid @RequestBody Booking booking, @PathVariable String order_no) {
         return bookingService.update(booking, order_no);
     }
 
     @DeleteMapping(value = "/{order_no}")
-    @ApiOperation("取消预定接口")
+    @ApiOperation("Delete booking record interface")
     public ResponseDto delete(@PathVariable String order_no) {
         return bookingService.deleteByKey(order_no);
     }

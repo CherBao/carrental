@@ -17,7 +17,7 @@ public class UserService {
 
     public ResponseDto queryAll(int offset, int limit) {
         try {
-            if (offset < 0 || limit <= 0) throw new Exception("分页参数非法!");
+            if (offset < 0 || limit <= 0) throw new Exception("Illegal paging parameter!");
             List<User> data = userMapper.queryAll(offset, limit);
             return ResponseDto.builder().isSuccess(true).data(data).message("ok").build();
         } catch (Exception e) {

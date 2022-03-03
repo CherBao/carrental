@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -42,31 +43,34 @@ class BookingServiceTest {
     void order() {
         Booking booking = new Booking();
         booking.setUser_id(1);
-        booking.setVehicle_id(1);
-        booking.setTake_date(new Timestamp(new Date().getTime()));
+        booking.setCar_id("苏F88888");
+        booking.setPickup_date(new Timestamp(new Date().getTime()));
+        booking.setReturn_date(new Timestamp(new Date().getTime()));
         ResponseDto res = bookingService.order(booking);
         assertTrue(res.isSuccess());
-        assertEquals(res.getData(),1);
     }
 
     @Test
-    void take() {
+    void pickup() {
         Booking booking = new Booking();
         booking.setOrder_no("2022030200001");
         booking.setUser_id(2);
-        booking.setVehicle_id(2);
-        booking.setTake_date(new Timestamp(new Date().getTime()));
-        ResponseDto res = bookingService.take(booking);
+        booking.setCar_id("B888888");
+        booking.setPickup_date(new Timestamp(new Date().getTime()));
+        booking.setReturn_date(new Timestamp(new Date().getTime()));
+
+        ResponseDto res = bookingService.pickup(booking);
         assertTrue(res.isSuccess());
     }
 
     @Test
     void returnBack() {
         Booking booking = new Booking();
-        booking.setOrder_no("2022030200000");
+        booking.setOrder_no("2022030200001");
         booking.setUser_id(1);
-        booking.setVehicle_id(1);
-        booking.setTake_date(new Timestamp(new Date().getTime()));
+        booking.setCar_id("B888888");
+        booking.setPickup_date(new Timestamp(new Date().getTime()));
+        booking.setReturn_date(new Timestamp(new Date().getTime()));
         ResponseDto res = bookingService.returnBack(booking);
         assertTrue(res.isSuccess());
     }
@@ -75,18 +79,17 @@ class BookingServiceTest {
     void update() {
         String orderNO = "2022030200000";
         Booking booking = (Booking) bookingService.queryByKey(orderNO).getData();
-        booking.setTenancy(1000);
+        booking.setRent(new BigDecimal("500"));
         ResponseDto res = bookingService.update(booking,orderNO);
         assertTrue(res.isSuccess());
         booking = (Booking) bookingService.queryByKey(orderNO).getData();
-        assertEquals(booking.getTenancy(),1000);
+        assertEquals(booking.getRent(),new BigDecimal("500"));
     }
 
     @Test
     void deleteByKey() {
-        String orderNO = "20220302000004";
+        String orderNO = "2022030200002";
         ResponseDto res = bookingService.deleteByKey(orderNO);
         assertTrue(res.isSuccess());
-        assertEquals(res.getData(),0);
     }
 }
