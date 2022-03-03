@@ -36,6 +36,4 @@ public interface BookingMapper {
     @Update("update booking set status = #{status} where order_no = #{orderNo}")
     int updateStatus(String orderNo, char status);
 
-    @Select(value = "select * from booking where model = #{user_id} order by order_no")
-    List<Car> queryConditonCars(String model, long pickup_date, long return_date);
 }
