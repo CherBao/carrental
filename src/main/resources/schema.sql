@@ -17,7 +17,7 @@ price decimal not null default 0 comment 'rent per day'
 --booking info
 create table if not exists booking(
 order_no char(13) not null primary key comment 'booking order number',
-user_id char(6) not null comment 'user id',
+user_id int not null comment 'user id',
 car_id char(7) not null comment 'car id',
 status char(1) not null default '0' comment 'booking status',
 rent decimal default 0 comment 'total rent',

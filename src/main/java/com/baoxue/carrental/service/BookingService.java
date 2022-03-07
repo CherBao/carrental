@@ -57,11 +57,12 @@ public class BookingService {
         try {
             int v = carMapper.updateStatus(booking.getCar_id(), Constants.CAR_BOOKED);
             if (v == 0) throw new Exception("Failed to update car status!");
-            booking.setOrder_no(String.valueOf(System.currentTimeMillis()));
+            String order_no = String.valueOf(System.currentTimeMillis());
+            booking.setOrder_no(order_no);
             booking.setStatus(Constants.BOOK_WAITING);
             int b = bookingMapper.insert(booking);
             if (b == 0) throw new Exception("Failed to add booking record!");
-            return ResponseDto.builder().isSuccess(true).message("ok").build();
+            return ResponseDto.builder().isSuccess(true).data(order_no).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -76,7 +77,7 @@ public class BookingService {
             if (v == 0) throw new Exception("Failed to update car status!");
             int b = bookingMapper.updateStatus(booking.getOrder_no(), Constants.BOOK_PROCESSING);
             if (b == 0) throw new Exception("Failed to update booking status!");
-            return ResponseDto.builder().isSuccess(true).message("ok").build();
+            return ResponseDto.builder().isSuccess(true).data(booking.getOrder_no()).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -91,7 +92,7 @@ public class BookingService {
             if (v == 0) throw new Exception("Failed to update car status!");
             int b = bookingMapper.updateStatus(booking.getOrder_no(), Constants.BOOK_FINISHED);
             if (b == 0) throw new Exception("Failed to update booking status!");
-            return ResponseDto.builder().isSuccess(true).message("ok").build();
+            return ResponseDto.builder().isSuccess(true).data(booking.getOrder_no()).message("ok").build();
         } catch (Exception e) {
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

@@ -31,7 +31,7 @@ class BookingControllerTest {
 
     @Test
     void queryByKey() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/book/query/2022030200000")
+        mockMvc.perform(MockMvcRequestBuilders.get("/book/query/1646652526300")
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -50,7 +50,6 @@ class BookingControllerTest {
     @Test
     void order() throws Exception {
         JSONObject params = new JSONObject();
-        params.put("order_no", "2022030200003");
         params.put("user_id", 1);
         params.put("car_id", "D888888");
         params.put("status", "0");
@@ -69,7 +68,7 @@ class BookingControllerTest {
     @Test
     void pickup() throws Exception {
         JSONObject params = new JSONObject();
-        params.put("order_no", "2022030200000");
+        params.put("order_no", "1646653009428");
         params.put("user_id", 1);
         params.put("car_id", "A888888");
         params.put("status", "0");
@@ -87,7 +86,7 @@ class BookingControllerTest {
     @Test
     void returnBack() throws Exception {
         JSONObject params = new JSONObject();
-        params.put("order_no", "2022030200000");
+        params.put("order_no", "1646653009428");
         params.put("user_id", 1);
         params.put("car_id", "A888888");
         params.put("status", "0");
@@ -105,14 +104,14 @@ class BookingControllerTest {
     @Test
     void update() throws Exception {
         JSONObject params = new JSONObject();
-        params.put("order_no", "2022030200001");
+        params.put("order_no", "1646652526300");
         params.put("user_id", 2);
         params.put("car_id", "B888888");
         params.put("status", "0");
         params.put("rent", new BigDecimal("310"));
         params.put("pickup_date", new Date().getTime());
         params.put("return_date", new Date().getTime());
-        mockMvc.perform(MockMvcRequestBuilders.put("/book/2022030200001")
+        mockMvc.perform(MockMvcRequestBuilders.put("/book/1646652526300")
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(JSONObject.toJSONString(params))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -122,7 +121,7 @@ class BookingControllerTest {
 
     @Test
     void delete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/book/2022030200002")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/book/1646311932705")
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())

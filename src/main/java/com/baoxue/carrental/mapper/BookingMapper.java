@@ -1,8 +1,6 @@
 package com.baoxue.carrental.mapper;
 
 import com.baoxue.carrental.domain.Booking;
-import com.baoxue.carrental.domain.Car;
-import com.baoxue.carrental.domain.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

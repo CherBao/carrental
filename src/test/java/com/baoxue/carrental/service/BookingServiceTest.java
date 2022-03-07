@@ -27,7 +27,7 @@ class BookingServiceTest {
 
     @Test
     void queryByKey() {
-        ResponseDto res = bookingService.queryByKey("2022030200000");
+        ResponseDto res = bookingService.queryByKey("1646653009428");
         assertTrue(res.isSuccess());
         assertNotNull(res.getData());
     }
@@ -43,7 +43,7 @@ class BookingServiceTest {
     void order() {
         Booking booking = new Booking();
         booking.setUser_id(1);
-        booking.setCar_id("苏F88888");
+        booking.setCar_id("A888888");
         booking.setPickup_date(new Timestamp(new Date().getTime()));
         booking.setReturn_date(new Timestamp(new Date().getTime()));
         ResponseDto res = bookingService.order(booking);
@@ -53,7 +53,7 @@ class BookingServiceTest {
     @Test
     void pickup() {
         Booking booking = new Booking();
-        booking.setOrder_no("2022030200001");
+        booking.setOrder_no("1646652526300");
         booking.setUser_id(2);
         booking.setCar_id("B888888");
         booking.setPickup_date(new Timestamp(new Date().getTime()));
@@ -66,8 +66,8 @@ class BookingServiceTest {
     @Test
     void returnBack() {
         Booking booking = new Booking();
-        booking.setOrder_no("2022030200001");
-        booking.setUser_id(1);
+        booking.setOrder_no("1646652526300");
+        booking.setUser_id(2);
         booking.setCar_id("B888888");
         booking.setPickup_date(new Timestamp(new Date().getTime()));
         booking.setReturn_date(new Timestamp(new Date().getTime()));
@@ -77,7 +77,7 @@ class BookingServiceTest {
 
     @Test
     void update() {
-        String orderNO = "2022030200000";
+        String orderNO = "1646653009428";
         Booking booking = (Booking) bookingService.queryByKey(orderNO).getData();
         booking.setRent(new BigDecimal("500"));
         ResponseDto res = bookingService.update(booking,orderNO);
@@ -88,7 +88,7 @@ class BookingServiceTest {
 
     @Test
     void deleteByKey() {
-        String orderNO = "2022030200002";
+        String orderNO = "1646311932705";
         ResponseDto res = bookingService.deleteByKey(orderNO);
         assertTrue(res.isSuccess());
     }

@@ -4,7 +4,7 @@ public class Constants {
 
     public static char CAR_IN_STOCK = '0';//The car is at company
     public static char CAR_BOOKED = '1';//booked
-    public static char CAR_USING = '1';//picked up, using
+    public static char CAR_USING = '2';//picked up, using
     public static char CAR_BAD = '9';//Vehicle abnormal state
 
     public static char BOOK_WAITING = '0';//Waiting for pick-up

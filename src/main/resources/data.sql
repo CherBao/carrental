@@ -9,9 +9,9 @@ insert into car(id,model,status,price) values('C888888','BMW 650','0',120.00);
 insert into car(id,model,status,price) values('D888888','BMW 650','0',120.00);
 
 insert into booking(order_no,user_id,car_id,status,rent,pickup_date,return_date,create_time)
-values('2022030200000',1,'A888888','3',200.00,'2022-3-1 13:12:21','2022-3-1 13:12:21','2022-3-2 13:12:21');
+values('1646653009428',1,'A888888','9',200.00,'2022-3-1 13:12:21','2022-3-1 13:12:21','2022-3-2 13:12:21');
 insert into booking(order_no,user_id,car_id,status,rent,pickup_date,return_date,create_time)
-values('2022030200001',2,'B888888','3',200.00,'2022-3-1 13:12:21','2022-3-1 13:12:21','2022-3-2 13:12:21');
+values('1646652526300',2,'B888888','9',200.00,'2022-3-1 13:12:21','2022-3-1 13:12:21','2022-3-2 13:12:21');
 insert into booking(order_no,user_id,car_id,status,rent,pickup_date,return_date,create_time)
-values('2022030200002',3,'C888888','3',200.00,'2022-3-1 13:12:21','2022-3-1 13:12:21','2022-3-2 13:12:21');
+values('1646311932705',3,'C888888','9',200.00,'2022-3-1 13:12:21','2022-3-1 13:12:21','2022-3-2 13:12:21');
 
